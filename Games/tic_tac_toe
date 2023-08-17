@@ -1,1 +1,75 @@
+import java.util.Scanner;
+import java.util.Arrays;
+public class tic_tac_toe {
 
+    //2 players X O
+    // matrix 3*3 and set all values to ' '
+    //player x(1)-ask player x the position
+    //check whether the position is empty
+    //if empty add X and check three condition()
+    //if not empty reask player X to enter the postion and again check the conditions
+    //if any condition is true Player X wins
+    //else change player to O(o)
+    public static void main(String[] args) {
+        System.out.println("Select Player:\nPress 1--->'X'\nPress 2--->'O'\n");
+        Scanner sc=new Scanner(System.in);
+        int choice=sc.nextInt();
+        char Player=' ';
+                switch(choice){
+                    case 1: Player='X';
+                        break;
+
+                    case 2: Player='O';
+                        break;
+                }
+
+
+
+
+
+        char [][] matrix= new char[3][3];
+           for(int i=0;i<matrix.length;i++){
+               for(int j=0;j<matrix[i].length;j++){
+                   matrix[i][j]=' ';
+            }
+        }
+
+        System.out.println("Welcome to TIC-TOC-TAE GAME!!\n\n");
+           int count=0;
+        while(count<9){
+            System.out.println("Player:"+Player);
+            System.out.println("Enter row number");
+            int row=sc.nextInt();
+            System.out.println("Enter column number");
+            int col=sc.nextInt();
+            if(matrix[row-1][col-1]==' ')matrix[row-1][col-1]=Player;
+            else{
+                while(matrix[row][col]!=' ') {
+                    System.out.println("This Position is already taken!\n\n");
+                    System.out.println("Re-Enter row number:");
+                    row = sc.nextInt();
+                    System.out.println("Re-Enter column number:");
+                    col = sc.nextInt();
+                }
+                matrix[row-1][col-1]=Player;
+            }
+            for(int i=0;i<matrix.length;i++){
+                for(int j=0;j<matrix[i].length;j++){
+                    System.out.print(matrix[i][j]);
+                    if(j<matrix[i].length-1) System.out.print("|");
+                }
+                System.out.println();
+                System.out.println("_________________");
+            }
+
+            for(int i=0;i<matrix.length;i++){
+               if((matrix[i][0]==Player&&matrix[i][0]==matrix[i][1]&&matrix[i][1]==matrix[i][2])||(matrix[0][i]==Player&&matrix[0][i]==matrix[1][i] && matrix[1][i]==matrix[2][i])||(matrix[0][0]==Player&&matrix[0][0]==matrix[1][1]&& matrix[1][1]==matrix[2][2])||(matrix[0][2]==Player&&matrix[0][2]==matrix[1][1]&& matrix[1][1]==matrix[2][0])){
+                   System.out.println("\n\t\tCongratulations! Player "+Player+" WINS!");
+                   count=9;
+               }
+            }
+             Player=(Player=='X')?'O':'X';
+             count++;
+           }
+    }
+}
