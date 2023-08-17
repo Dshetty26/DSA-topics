@@ -11,7 +11,55 @@ while(loop will run till we reach the mid value){
 }
 */
 
+Method 1:
 
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        return SearchMedian(nums1,nums2);
+    }
+
+    static double SearchMedian(int []arr1,int []arr2){
+        int TotalLength=arr1.length+arr2.length;
+        int mid=(arr1.length+arr2.length)/2;
+        int val1=0, val2=0;
+        int ptr1=0,ptr2=0;
+        int count=0;
+        while(count<=mid){
+            if(ptr1<arr1.length && ptr2<arr2.length){
+                if(arr1[ptr1]<=arr2[ptr2]){
+                    if(count==mid-1) val1=arr1[ptr1];
+                    if(count==mid) val2=arr1[ptr1];
+                    count++;
+                    ptr1++;
+                }
+                else{
+                     if(count==mid-1) val1=arr2[ptr2];
+                    if(count==mid) val2=arr2[ptr2];
+                    count++;
+                    ptr2++;
+                }
+                
+            }
+            else if(ptr1<arr1.length){
+               if(count==mid-1) val1=arr1[ptr1];
+               if(count==mid) val2=arr1[ptr1];
+                    count++;
+                    ptr1++;
+            }
+            else {
+              if(count==mid-1) val1=arr2[ptr2];
+               if(count==mid) val2=arr2[ptr2];
+                    count++;
+                    ptr2++;
+            }
+        }
+       if (TotalLength%2==1) return (double) val2;
+       else return (double) (val1+val2)/(double) 2;
+    }
+}
+
+
+Method 2:
 
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
