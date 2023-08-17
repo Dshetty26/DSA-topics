@@ -1,1 +1,61 @@
+//this is brute force approach to find the median of two sorted find Median of two Sorted Arrays
 
+//Time complexity=O(m+n)   m is size of arr1,  n is size of arr2;
+//Space Complexity=O(m+n)
+
+//The steps of this approach are as follows
+//1st - create a new Array of size equals to mid
+//2nd - create 3 pointers ptr1-->0th index of arr1 && ptr2--> 0th index of arr2 & ptr3--> 0th index of newArr
+
+/*Conditions:
+
+ 1st> while(ptr3<=mid ){
+    if( ptr1<arr1.length && ptr2<arr2.length){           //this means that ptr1 and ptr2 both are less than thier end Index+1;
+    
+       if(arr1[ptr1]<arr2[ptr2]) newArr[ptr3++]=arr1[ptr1++];                     //check(which is less and add it to the newArray )
+       else  newArr[ptr3++]=arr1[ptr2++];     
+
+    //if any one of them reach end index just copy the remaining elements
+     } 
+
+
+     else if(ptr1<arr1.length){
+        newArr[ptr3++]=arr1[ptr1++];
+     }
+     else{
+        newArr[ptr3++]=arr2[ptr2++];
+     }
+
+
+     Returning conditions:
+     
+     if TotalLength is odd return  newArr[mid];
+     if TotalLength is even return (newArr[mid-1]+newArr[mid])/2;
+
+*/
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int TotalLength=nums1.length+nums2.length;
+        
+        int mid=(nums1.length+nums2.length)/2;
+        return searchMedian(nums1,nums2,TotalLength,mid);
+    }
+
+    double searchMedian(int[] arr1,int[] arr2,int TotalLength,int mid){
+        if(TotalLength==2) mid=1;
+        int [] newArr=new int[mid+1];
+        int ptr1=0,ptr2=0,ptr=0;
+        
+        while(ptr1<arr1.length && ptr2<arr2.length & ptr<newArr.length){
+            if(arr1[ptr1]<=arr2[ptr2]) newArr[ptr++]=arr1[ptr1++];
+            else newArr[ptr++]=arr2[ptr2++];
+        }
+        while(ptr1<arr1.length && ptr<newArr.length) newArr[ptr++]=arr1[ptr1++];
+         while(ptr2<arr2.length && ptr<newArr.length) newArr[ptr++]=arr2[ptr2++];
+        
+         if(TotalLength==2) return (double)(newArr[mid-1]+newArr[mid])/2;
+         if((newArr.length==1)&& mid==0 || TotalLength%2==1) return (double) (newArr[mid]);
+         else return (double)(newArr[mid-1]+newArr[mid])/2;
+    }
+}
