@@ -1,0 +1,40 @@
+// ITERATIVE APPROACH
+
+public class factorial_Iterative {
+    public static void main(String[] args) {
+        System.out.println("Enter a number:");
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        System.out.println("The factorial of "+n+" is:"+fact(n));
+    }
+
+    public static int fact(int n){
+        if(n==0) return 1;
+        int result=1;
+        while(n>=1){
+            result*=n--;
+        }
+        return result;
+    }
+}
+
+
+
+//RECCURSIVE APPROACH
+
+public class factorial_reccursive {
+    public static void main(String[] args) {
+        System.out.println("Enter a number:");
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        System.out.println("The factorial of "+n+" is:"+fact(n));
+
+    }
+    static int fact(int n){
+        if(n==0) return 1;
+        if(n==1){
+            return 1;
+        }
+        return n*fact(n-1);
+    }
+}

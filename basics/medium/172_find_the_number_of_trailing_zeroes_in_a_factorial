@@ -1,0 +1,13 @@
+class Solution {
+    public int trailingZeroes(int n) {
+        int divisor=5,count=0;
+        while(true){
+            if(n/divisor>0){
+                count+=n/divisor;
+                divisor*=5;
+            }
+            else break;
+        }
+        return count;
+    }
+}
