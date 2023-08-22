@@ -1,0 +1,45 @@
+/*
+There are three methods to find gcd 
+   Brute Force Approach--> Iterating i from (Min to 1) if (num1%i==0 && num2%i==0) return i; here 
+                                      Time Complexity is O(min(n,m))
+
+                                      
+   Better Approach-->  Using Euclid's Algorithm ie. 1> find Max(num1,num2) ; 2>Max-=min ; while(num1!=num2) return num1||num2;
+                       In worst Case i.e. if(num1=1 and num2=10) loop will run 10 times and end at (num1=1 & num2=1);
+                       Time complexity at worst-case remains the same i.e. O(max(num1,num2);
+     
+   Optimal Approach--> Gabriel Lame enhanced Euclid algorithm by just changing the operator from minus(-) to mod(%) and while(num1>0 && num2>0)
+                       steps 1> Find Max(num1,num2) ; 2>Max=Max%min ; while( num1>0 && num2>0) ;
+                       Here Time Complexity has reduced to log i.e O(log(min(num1,num2)));
+*/ 
+
+
+class Solution {
+    public int findGCD(int[] arr) {
+        int smallest=Search(arr,true);
+        int greatest=Search(arr,false);
+        return GCD(smallest,greatest);
+        
+    }
+    int Search(int [] arr,boolean isGreatest){
+        int returnVal=arr[0];
+        for(int i=1;i<arr.length;i++){
+            if(isGreatest){
+            if(arr[i]>returnVal) returnVal=arr[i];
+            }
+            else{
+            if(arr[i]<returnVal) returnVal=arr[i];
+            }
+        }
+        return returnVal;
+    }
+
+    int GCD(int num1 ,int num2){
+       while(num1>0 && num2>0){
+           if(num1>=num2) num1%=num2;
+           else num2%=num1;
+       }
+       if(num1>0) return num1;
+       else return num2;
+    }
+}
