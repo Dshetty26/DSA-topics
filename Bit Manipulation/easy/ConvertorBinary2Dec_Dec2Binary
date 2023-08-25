@@ -1,0 +1,54 @@
+
+//This will convert Decimal number eg-45 to Binary number ie 101101 and viceversa
+
+
+import java.util.Scanner;
+public class DecToBinary_BinaryToDec {
+    static Scanner sc=new Scanner(System.in);
+    public static void main(String[] args) {
+        System.out.println("Press 1--> Convert Decimal to Binary");
+        System.out.println("Press 2--> Convert Binary to Decimal");
+        int choice=sc.nextInt();
+        while(choice!=1 && choice!=2){
+            System.out.println("You have entered an invalid Input!");
+            System.out.println("Press 1--> Convert Decimal to Binary");
+            System.out.println("Press 2--> Convert Binary to Decimal");
+            choice=sc.nextInt();
+        }
+
+        switch(choice){
+            case 1: DecToBinary();
+                    break;
+            case 2: BinaryToDec();
+                    break;
+        }
+    }
+
+    static void DecToBinary(){
+        System.out.println("Enter Decimal Number:");
+        int N=sc.nextInt();
+        int InputNum=N;
+        String result=" ";
+        while(N>=1){
+            result=(N%2)+result;
+            N/=2;
+        }
+        System.out.println("\nBinary Value of "+InputNum+" is:"+result);
+    }
+
+    static void BinaryToDec(){
+        System.out.println("Enter Binary Number:");
+        String N=sc.next();
+        String InputNum=N;
+
+        int result=0;
+        int PowerValue=1;
+        for(int i=N.length()-1;i>=0;i--){
+            if(N.charAt(i)=='1'){
+                result=result+PowerValue;
+            }
+            PowerValue=2*PowerValue;
+        }
+        System.out.println("\nDecimal Value of "+InputNum+" is:"+result);
+    }
+}
