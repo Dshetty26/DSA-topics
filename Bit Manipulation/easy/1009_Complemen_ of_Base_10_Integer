@@ -1,1 +1,27 @@
-
+class Solution {
+    public int bitwiseComplement(int n) {
+        
+        String result="";
+        String complement="";
+        if(n==0) return 1;
+        while(n>=1){
+            result=(n%2) + result;
+            n/=2;
+        }
+        for(int i=result.length()-1;i>=0;i--){
+            if(result.charAt(i)=='0'){
+                complement=1+complement;
+            }
+            else complement=0+complement;
+        }
+        int value=0;
+        int powerValue=1;
+        for(int i=complement.length()-1;i>=0;i--){
+            if(complement.charAt(i)=='1'){
+                value=value+powerValue;
+            }
+            powerValue*=2;
+        }
+        return value;
+    }
+}
