@@ -1,0 +1,21 @@
+import java.util.Scanner;
+public class checkIfSorted {
+    public static void main(String[] args) {
+        System.out.println("Enter the size of array:");
+        Scanner sc=new Scanner(System.in);
+        int size=sc.nextInt();
+        int [] arr=new int[size];
+        for(int i=0;i<arr.length;i++){
+            System.out.println("Enter the "+i+" element:");
+            arr[i]=sc.nextInt();
+        }
+        System.out.println("Is-Sorted?: "+checkIfSorted(arr));
+    }
+
+    static boolean checkIfSorted(int arr[]){
+        for(int i=1;i<arr.length;i++){                                 //O(n)
+            if(arr[i]<arr[i-1]) return false;
+        }
+        return true;
+    }
+}
