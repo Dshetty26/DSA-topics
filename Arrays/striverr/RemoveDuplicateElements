@@ -1,0 +1,48 @@
+import java.util.Arrays;
+public class RemoveDuplicateElements {
+
+    public static void main(String[] args) {
+        int[] arr = {3, 1, 2, 1, 4, 5, 2, 1};
+        System.out.println("No Dupli-Array:" + Arrays.toString(BruteForce(arr)));
+
+         int[] arr1 = {3, 1, 2, 1, 4, 5, 2, 1};
+        System.out.println("No Dupli-Array" + Arrays.toString(OptimalSolution(arr1)));
+    }
+
+    static int[] BruteForce(int[] arr) {
+        int count = 1;
+        int i;
+        for (i = 0; i < arr.length - 1; i++) {                   //  O(n)
+            for (int j = i + 1; j < arr.length; j++) {           //  O(n*n)
+                if (arr[j] == arr[i]) {
+                    int k = j;
+                    while (k < arr.length - 1) {            // O(n*n*n)
+                        arr[k] = arr[k + 1];
+                        k++;
+                        if (arr[j] == Integer.MAX_VALUE) break;
+                    }
+                    arr[arr.length - count++] = Integer.MAX_VALUE;
+                }
+                if (arr[j] == Integer.MAX_VALUE) break;
+            }
+            if (arr[i] == Integer.MAX_VALUE) {
+                break;
+            }
+        }
+        arr = Arrays.copyOfRange(arr, 0, i - 1);      //O(n) or Logn
+        return arr;
+    }
+
+    static int[] OptimalSolution(int[] arr) {
+        Arrays.sort(arr);                                         //O(nlogn)
+        int[] newArr = new int[arr.length];
+        int count = 0, current = arr[0];
+        newArr[count++] = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {                    //O(n)
+            if (arr[i] != current) newArr[count++] = arr[i];
+            current = arr[i];
+        }                                                        //TimeComplexity= O(nlogn+n)
+        return newArr;                                           //spaceComplexity= O(n)
+    }
+}
