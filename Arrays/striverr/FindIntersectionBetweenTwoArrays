@@ -1,0 +1,50 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class FindTheIntersection {
+    public static void main(String[] args){
+        int arr1[]={1,1,2,3,5};
+        int arr2[]={2,3,4,4,5};
+        System.out.println("Brute Force Solution:"+Arrays.toString(bruteForce(arr1,arr2)));
+     System.out.println("Optimal Solution:"+Arrays.toString(OptimalSolution(arr1,arr2)));
+
+    }
+
+    static int[] bruteForce(int arr1[],int arr2[]){                       //Space-Complexity= O(2n)
+        int [] taken= new int[arr2.length];                             //Time-Complexity= O(n*m)
+        int [] intersected= new int[arr2.length];
+        int count=0;
+        for(int i=0;i<arr1.length;i++){                              //O(n)
+            for(int j=0;j<arr2.length;j++){                          //(O(n*m)
+                if(arr1[i]==arr2[j] && taken[j]!=1){
+                    taken[j]=1;
+                    intersected[count++]=arr1[i];
+                    break;
+                }
+            }
+        }
+        intersected= Arrays.copyOfRange(intersected,0,count);
+        return intersected;
+    }
+
+    //Two-Pointer Approach:
+    static int[]  OptimalSolution(int []arr1, int [] arr2){                              //O(M+N+LogN)
+      int i=0,j=0;
+      int newArr_Length;
+      if(arr1.length<=arr2.length) newArr_Length=arr1.length;
+      else newArr_Length=arr2.length;
+      int [] newArr= new int[newArr_Length];
+      int count=0;
+      while(i<arr1.length && j<arr2.length){
+          if(arr1[i]==arr2[j]) {
+              newArr[count++] = arr1[i];
+              i++ ;j++;
+          }
+          else if(arr1[i]<arr2[j])i++;
+          else j++;
+      }
+      newArr=Arrays.copyOfRange(newArr,0,count);                                //
+      return newArr;
+    }
+
+}
