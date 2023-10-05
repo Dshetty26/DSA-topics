@@ -1,0 +1,58 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+
+public class FindTheUnion {
+    public static void main(String[] args){
+        int arr1[]={1,1,2,3,5};
+        int arr2[]={2,3,4,4,5};
+        //System.out.println(Arrays.toString(OptimalApproach(arr1,arr2)));
+        System.out.println(Arrays.toString(bruteForce(arr1,arr2)));
+
+    }
+
+    static Object[] bruteForce(int[] arr1,int arr2[]){
+        HashSet hs=new HashSet();
+        for(int i=0;i<arr1.length;i++){                             //O(n11Logn)
+            hs.add(arr1[i]);
+        }
+        for(int i=0;i<arr2.length;i++){                             // O(n2Logn)
+            hs.add(arr2[i]);
+        }
+        int count=0;
+        Object [] Union=new Object [hs.size()];
+        for(Object ele:hs){                                         //O(n1+n2)
+           Union[count++]=ele;
+        }
+        return Union;
+    }
+
+    static int[] OptimalApproach(int [] arr1,int []arr2){                             //Time-Complexity  O(n+m)
+        int [] Union=new int[arr1.length+ arr2.length];                     //Space-Complexity  O(n+m)
+        int count=0;
+        int i=0,j=0;
+        if(arr1[i]<=arr2[j]) Union[count++]=arr1[i++];
+        else Union[count++]=arr2[j++];
+        while(i<arr1.length && j<arr2.length){
+            if(arr1[i]<=arr2[j]){
+                if(arr1[i]!=Union[count-1]) Union[count++]=arr1[i++];
+                else i++;
+            }
+            else{
+                if(arr2[j]!=Union[count-1]) Union[count++]=arr2[j++];
+                else j++;
+            }
+        }
+        while(i<arr1.length){
+            if(arr1[i]!=Union[count-1]) Union[count++]=arr1[i++];
+            else i++;
+        }
+        while(j<arr2.length) {
+            if (arr2[j] != Union[count - 1]) Union[count++] = arr2[j++];
+            else j++;
+        }
+        Union=Arrays.copyOfRange(Union,0,count);
+        return Union;
+    }
+    
+}
