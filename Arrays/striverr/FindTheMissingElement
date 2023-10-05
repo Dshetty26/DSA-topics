@@ -1,0 +1,104 @@
+      public class FIndTheMissingElement {
+    public static void main(String[] args) {
+        int[] arr={1,2,4,5};
+
+        System.out.println("Brute-Force solution:"+bruteForce(arr));
+        System.out.println("Better Solution:"+betterSol(arr));
+        System.out.println("Optimal Solution using Sum:"+OptimalSolutionUsingSum(arr));
+        System.out.println("Optimal Solution using XOR with 3N: "+OptimalSolutionUsingXOR_part1(arr));
+        System.out.println("Optimal Solution using XOR with 2N: "+OptimalSolutionUsingXOR_part2(arr));
+
+
+    }
+
+    static int bruteForce(int []arr){
+        int max=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>max)max=arr[i];
+        }
+        int flag=0;
+        for(int i=1;i<max;i++){                                // O(max)
+            flag=0;
+            for(int j=0;j<arr.length;j++){                     //O(n*max)
+                if(i==arr[j]){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0)return i;
+        }
+        return -1;
+    }
+
+
+    //Using Hashing
+    static int betterSol(int [] arr){                        //timeComplexity= O(n+n+n)=O(3n)    Space= O(max)
+        int max=0;
+        for(int i=0;i<arr.length;i++){                                //O(n)
+            if(arr[i]>max) max=arr[i];
+        }
+        int hash[]=new int[max+1];
+
+        for(int i=0;i<arr.length;i++){                                //O(n)
+            hash[arr[i]]=1;
+        }
+
+        for(int i=1;i<arr.length;i++){                                //O(n)
+            if(hash[i]==0) return i;
+        }
+        return -1;
+    }
+
+
+    //Optimal solution can be found using two techniques  i.e. sum and the other one can be XOR
+    // The most efficient one in long term will be XOR
+
+    static int OptimalSolutionUsingSum(int [] arr){
+        int max=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>max) max=arr[i];
+        }
+        int sumN=0;
+        for(int i=1;i<=max;i++){
+            sumN+=i;
+        }
+
+        int sumArray=0;
+        for(int i=0;i<arr.length;i++){
+            sumArray+=arr[i];
+        }
+        return sumN-sumArray;
+    }
+
+    static int OptimalSolutionUsingXOR_part1(int [] arr){        //Time-Complexity= O(N+N+N)=O(3N)
+        int max=0;
+        for(int i=0;i<arr.length;i++){                          // O(N)
+            if(arr[i]>max) max=arr[i];
+        }
+        int XOR1=0;
+        for(int i=1;i<=max;i++){                                //O(N)
+            XOR1^=i;
+        }
+        int XOR2=0;
+        for(int i=0;i<arr.length;i++){                           //O(N0
+            XOR2^=arr[i];
+        }
+        return XOR1^XOR2;
+    }
+
+    static int OptimalSolutionUsingXOR_part2(int [] arr){     //Time-Complexity=O(N+N)=O(2N)
+        int max=0;
+        for(int i=0;i<arr.length;i++){                        //O(N)
+            if(arr[i]>max)max=arr[i];
+        }
+        int XOR1=0;
+        int XOR2=0;
+        for(int i=0;i<arr.length;i++){                         //O(N)
+            XOR1^=i+1;
+            XOR2^=arr[i];
+        }
+        XOR1^=max;
+        return XOR1^XOR2;
+    }
+
+}
