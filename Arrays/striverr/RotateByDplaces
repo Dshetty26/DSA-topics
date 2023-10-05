@@ -1,0 +1,65 @@
+import java.util.Scanner;
+import java.util.Arrays;
+public class rotateByDplaces {
+    public static void main(String[] args) {
+        int []arr={1,2,3,4,5,6,7};
+        System.out.println("Enter the number of places Array is to be rotated:");
+        Scanner sc=new Scanner(System.in);
+        int d=sc.nextInt();
+        d=d%arr.length;
+        System.out.println("Rotation by Brute-Force:"+Arrays.toString(bruteForce(arr,d)));
+        System.out.println("Rotation by Better-Approach:"+Arrays.toString(betterApproach(arr,d)));
+        System.out.println("Rotation by Optimal Approach:"+Arrays.toString(optimalSolution(arr,d)));
+    }
+
+    static int[] bruteForce(int []arr,int D){
+        while(D>0){                                         //O(n-1)
+            int temp=arr[0];
+            for(int i=0;i<arr.length;i++){                 //Time-Complexity= O(n),  Space-Complexity=O(1)
+                if(i==arr.length-1) arr[i]=temp;
+                else arr[i]=arr[i+1];
+            }
+            D--;
+        }
+        return arr;                                         //O(n-1* n)= O(n_square)
+    }
+
+    static int[] betterApproach(int[] arr,int D){            //Time-Complexity= O(D+1+n-D+1+D+1)= O(n+D+3)
+        int []temp=new int[D];                               //Space-Complexity= O(D)
+        //Copy the rotated Elements
+        for(int i=0;i<D;i++){                                 //O(D+1)
+            temp[i]=arr[i];
+        }
+
+        //left shift the remaining elements by D positions
+        for(int i=0;i<arr.length-D;i++){                     //O(n-D+1)
+            arr[i]=arr[i+D];
+        }
+
+        // copy the temp array
+        for(int i=arr.length-D;i<arr.length;i++){          //O(D+1)
+            arr[i]=temp[i-(arr.length-D)];
+        }
+        return arr;
+    }
+
+
+    //We can optimize it to an Optimal solution by reversing the arrays
+    static int[] optimalSolution(int [] arr, int D){                         //Time-Complexity= O(D+n-D+n)= O(2n)
+
+
+        reverse(arr,0,D-1);                                                    //O(D/2)
+        reverse(arr,D,arr.length-1);                                                //O(n-D/2)
+        reverse(arr,0,arr.length-1);                                           //O(n)
+        return arr;
+    }
+
+    static int[] reverse(int[] arr,int start,int end){
+        while(start<=end){
+            int temp=arr[start];
+            arr[start++]=arr[end];
+            arr[end--]=temp;
+        }
+        return arr;
+    }
+}
