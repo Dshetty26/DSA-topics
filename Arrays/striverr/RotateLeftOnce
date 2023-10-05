@@ -1,0 +1,28 @@
+package com.example.dsaMains.arrays;
+import java.util.Arrays;
+public class RotateLeftOnce {
+    public static void main(String[] args){
+        int [] arr={1,2,3,4,5,6,7};
+        System.out.println("Rotating by BruteForce:"+Arrays.toString(bruteForce(arr)));
+        System.out.println("Rotating by BruteForce:"+Arrays.toString(OptimalSolution(arr)));
+
+    }
+
+    static int[] bruteForce(int [] arr){           //Time-Complexity= O(n),  Space-Complexity-O(n)
+        int [] temp=new int [arr.length];
+        for(int i=0;i<arr.length-1;i++){
+            temp[i]=arr[i+1];
+        }
+        temp[arr.length-1]=arr[0];
+        return temp;
+    }
+
+    static int[] OptimalSolution(int []arr){       //Time-Complexity= O(n),  Space-Complexity=O(1)
+        int temp=arr[0];
+        for(int i=0;i<arr.length;i++){
+            if(i==arr.length-1) arr[i]=temp;
+            else arr[i]=arr[i+1];
+        }
+        return arr;
+    }
+}
