@@ -1,0 +1,90 @@
+import java.util.HashMap;
+import java.util.Scanner;
+public class LongestSubArrayWithSumEqualsK {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 0,0,1, 1, 1, 1, 4, 2, 3};
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the total Sum(K): ");
+        int k = sc.nextInt();
+//        int[] ans=bruteForce(arr,k);
+//        System.out.println("Maximum SubArray with Sum="+k+" starts from Index:"+ans[0]+" and ends at Index:"+ans[1]+" with distance:"+ans[2]);
+//        int[] ans = betterApproach(arr, k);
+//        System.out.println("Maximum SubArray with Sum=" + k + " starts from Index:" + ans[1] + " and ends at Index:" + ans[2] + " with distance:" + ans[0]);
+        int[] ans = optimalApproach(arr, k);
+        System.out.println("Maximum SubArray with Sum=" + k + " starts from Index:" + ans[1] + " and ends at Index:" + ans[2] + " with distance:" + ans[0]);
+
+    }
+
+
+    static int[] bruteForce(int[] arr, int k) {                        //Time-Complexity=O(N_square) Space Complexity=O(1)
+        int start = 0, end = 0, count = 0, temp = 0, sum = 0;
+
+        for (int i = 0; i < arr.length; i++) {                                  //O(n)
+            count = 0;
+            sum = 0;
+            for (int j = i; j < arr.length; j++) {                              //O(n*n)
+                sum += arr[j];
+                if (sum <= k) {
+                    count++;
+                    if (sum == k) {
+                        if (temp < count) {
+                            temp = count;
+                            start = i;
+                            end = j;
+                        }
+                        break;
+                    }
+                } else break;
+            }
+        }
+        return new int[]{start, end, temp};
+    }
+
+    static int[] betterApproach(int[] arr, int k) {          
+        int sum = 0, count = 0, startIndex = 0, endIndex = 0;
+        HashMap<Integer, Integer> sumArr = new HashMap<>();         //TC= O(1) for put & get functions   SC=O(LogN)
+        for (int i = 0; i < arr.length; i++) {                      //TC= O(N)
+            int diff = 0;
+            sum += arr[i];
+            if(i>0 && sum==sum-arr[i]) continue;
+
+                if (sum == k) {
+                count = i + 1;
+                startIndex = 0;
+                endIndex = i;
+            }
+            sumArr.put(sum, i);
+            diff = sum - k;
+            if (sumArr.containsKey(diff)) {
+                int distance = i - sumArr.get(diff) ;
+                if (distance > count) {
+                    count = distance;
+                    startIndex = sumArr.get(diff)+1;
+                    endIndex = i;
+                }
+            }
+        }
+        return new int[]{count, startIndex, endIndex};
+    }
+
+    static int[] optimalApproach(int [] arr, int k){             // TimeComplexity=O(2N)   SpaceComplexity=O(1)
+        int i=0,j=0,sum=0,count=0,distance=0,startIndex=0,endIndex=0;
+        while(i<arr.length ){
+            sum+=arr[i];
+            while(sum>k){
+                sum-=arr[j++];
+            }
+            if(sum==k){
+                count=i-j+1;
+                if(count>distance){
+                    distance=count;
+                    startIndex=j;
+                    endIndex=i;
+                }
+            }
+            i++;
+
+        }
+        return new int[] {distance,startIndex,endIndex};
+    }
+}
