@@ -1,0 +1,62 @@
+package com.example.dsaMains.arrays;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.HashMap;
+public class FindMajorityElement {
+    public static void main(String[] args){
+        int [] arr={7,7,5,7,5,1,5,7,5,5,7,7,5,5,5,5};
+        System.out.println("Majority Element:"+bruteForce(arr));
+        System.out.println("Majority Element:"+betterApproach(arr));
+        System.out.println("Majority Element:"+OptimalSolution(arr));
+
+    }
+    static int bruteForce(int [] arr){
+
+        for(int i=0;i<arr.length;i++){
+            int count=0;
+            for(int j=0;j<arr.length;j++){
+                if(arr[i]==arr[j])count++;
+            }
+            if(count>arr.length/2) return arr[i];
+        }
+       return -1;
+    }
+
+    //using hashing
+    static int betterApproach(int[] arr){
+        HashMap<Integer,Integer> mpp= new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            int value=mpp.getOrDefault(arr[i],0);
+            mpp.put(arr[i],value+1);
+        }
+        for(Map.Entry<Integer,Integer> itr: mpp.entrySet()){
+            if(itr.getValue()>arr.length/2) {
+                return itr.getKey();
+            }
+            }
+        return -1;
+        }
+
+        static int OptimalSolution(int [] arr){
+        int count=0;
+        int element=0;
+        for(int i=0;i<arr.length;i++){
+            if(count==0){
+                element=arr[i];
+            }
+            if(arr[i]==element){
+                count++;
+            }
+            else count--;
+        }
+        count=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==element){
+                count++;
+            }
+        }
+        if(count>arr.length/2) return element;
+        else return -1;
+        }
+    }
+
