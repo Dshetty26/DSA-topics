@@ -1,0 +1,48 @@
+package com.example.dsaMains.arrays;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Arrays;
+public class TwoSumProblem {
+    public static void main(String[] args) {
+        System.out.println("Enter the totol sum Required:");
+        Scanner sc=new Scanner(System.in);
+        int K=sc.nextInt();
+        int [] arr= {2,6,5,8,11};
+        System.out.println(K+" Can be obtained using: " +Arrays.toString(bruteForce(arr, K)));
+        System.out.println(K+" Can be obtained using: " +Arrays.toString(betterApproach(arr,K)));
+        System.out.println(K+" Can be obtained using: " +Arrays.toString(bruteForce(arr, K)));
+
+
+    }
+
+    public static int [] bruteForce(int [] arr, int k){       //Time-Complexity= O(n_square)
+        for(int i=0;i<arr.length-1;i++){                                                    //O(n)
+            for(int j=i+1;j<arr.length;j++){                                                //O(n)
+                if(arr[i]+arr[j]==k) return new int[] {arr[i],arr[j]};
+            }
+        }
+        return new int [] {-1,-1};
+    }
+
+    public static int[] betterApproach(int [] arr,int k){       //Time-Complexity= O(N) if time-Complexity of HashMap is
+        HashMap<Integer, Integer> ValueIndex= new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            ValueIndex.put(arr[i],i);
+            if(ValueIndex.containsKey(k-arr[i])){
+                return new int[] {arr[i],k-arr[i]};
+            }
+        }
+        return new int [] {-1,-1};
+
+    }
+
+    public static int[] optimalSolution(int [] arr,int K){     //Time-Complexity= O(N) Space-Complexity=O(1)
+        int sum=0, i=0, j=arr.length-1;
+        while(i<=j){
+            sum=arr[i]+arr[j];
+            if(sum>K) j--;
+            if(sum<K) i++;
+            if(sum==K) return new int[] {arr[i],arr[j]};
+        }
+        return new int[] {-1,-1};
+    }
