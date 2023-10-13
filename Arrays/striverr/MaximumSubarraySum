@@ -1,0 +1,53 @@
+package com.example.dsaMains.arrays;
+
+public class maximumSubarraySum {
+    public static void main(String[] args) {
+        int [] arr={-2,-3,4,-1,-2,1,5,-3};
+        System.out.println("Max Element Brute-Force:"+bruteForce(arr));
+        System.out.println("Max Element Better-Solution:"+betterSolution(arr));
+        System.out.println("Max Element Optimal-Solution:"+optimalSolution(arr));
+
+    }
+    public static int bruteForce(int []arr){
+        int max=0;
+        for(int i=0;i<arr.length;i++){                     // O(N)
+            int sum=0;
+            for(int j=0;j<arr.length;j++){                 // O(N)
+                for(int k=i;k<j;k++){                      // O(N)
+                    sum+=arr[k];
+                }
+                if(sum>max) max=sum;
+                sum=0;
+            }
+        }
+        return max;
+    }
+
+    public static int betterSolution(int [] arr){
+        int max=0;
+        for(int i=0;i<arr.length;i++){                        //O(N)
+            int sum=0;
+            for(int j=i;j<arr.length;j++){                     //O(N)
+                sum+=arr[j];
+                if(sum>max)max=sum;
+            }
+
+        }
+        return max;
+    }
+
+    public static int optimalSolution(int []arr){
+        int max=0;
+        int sum=0;
+        for(int i=0;i<arr.length;i++){                    //O(N)
+            sum+=arr[i];
+            if(sum>max) max=sum;
+            if(sum<0){
+                sum=0;
+            }
+            else continue;
+
+        }
+        return max;
+    }
+}
