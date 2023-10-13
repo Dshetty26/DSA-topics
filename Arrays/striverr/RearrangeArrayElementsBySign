@@ -1,0 +1,227 @@
+package com.example.dsaMains.arrays;
+import java.util.Arrays;
+import java.util.ArrayList;
+public class RearrangeArrayElementsBySign {
+    public static void main(String[] args) {
+        int [] arr={2,3,6,-2,-9,4,-7,-10};
+        System.out.println("Brute Force Approach:"+Arrays.toString(bruteForce(arr)));
+        int[] arr1={2,3,6,-2,-9,4,-7,-10};
+        System.out.println("Better Solution:"+Arrays.toString(betterSolution(arr1)));
+        int[] arr2={2,3,6,-2,-9,4,-7,-10};
+        System.out.println("Optimal Approach:"+Arrays.toString(optimalSolution(arr2)));
+
+
+        int unequal[]={2,3,6,-2,-9,-7,11,12};
+        System.out.println(("Brute-Force Approach:"+Arrays.toString(bruteForce2(arr))));
+        int unequal2[]={2,3,6,-2,-9,-7,11,12};
+        System.out.println(("Optimal soln:"+Arrays.toString(optimalSolution2(arr))));
+
+    }
+
+    /*      README
+
+    There can be two scenarios
+    Ist case> when there are equal number of positive elements and negative elements
+
+    II case> when positive element exceeds negative element or vice-versa
+     */
+
+
+    //Case-I
+
+    static int [] bruteForce(int [] arr){                       //      Time-Complexity=O(N +N/2)   Space-Complexity=O(N/2 + N/2)=O(N)
+
+        ArrayList<Integer> positive=new ArrayList<Integer>();     //O(n/2)
+        ArrayList<Integer> negative= new ArrayList<Integer>();    //O(n/2)
+
+        for(int i=0;i<arr.length;i++){                          //  TC=O(N)
+            if(arr[i]>0){
+                positive.add(arr[i]);
+            }
+            else negative.add(arr[i]);
+        }
+
+        for(int i=0;i<arr.length/2;i++){                         // O(N/2)
+            arr[2*i]=positive.get(i);
+            arr[2*i+1]=negative.get(i);
+        }
+        return arr;
+    }
+
+    static int[] betterSolution(int [] arr){           // Time-complexity=O(N)  SpaceComplexity=O(N)
+        int [] ans= new int[arr.length];
+        int posIndex=0, negIndex=1;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>0) {
+                ans[posIndex]=arr[i];
+                posIndex+=2;
+        }
+            else{
+                ans[negIndex]=arr[i];
+                negIndex+=2;
+            }
+
+        }
+        return ans;
+    }
+
+    static int[] optimalSolution(int[] arr){                  //Time_Complexity=O(N)   SpaceComplexity=O(1)
+    int posIndex=0;
+    int negIndex=1;
+    int i=0;
+        while (i < arr.length && (posIndex < arr.length && negIndex < arr.length)) {
+            if(arr[i]>0){
+                if(i%2==0){
+                    if(i>=posIndex)   {
+                        posIndex+=2;
+                    }
+                    i++;
+                }
+                else {
+                    swap(arr,posIndex,i);
+                        posIndex+=2;
+                    }
+                }
+
+            else{
+                if(i%2==1){
+                    if(i>=negIndex){
+                        negIndex+=2;
+                    }
+                    i++;
+                }
+                else{
+                    swap(arr,negIndex,i);
+                    negIndex+=2;
+                }
+            }
+        }
+    return arr;
+    }
+
+    static int [] swap(int [] arr,int i,int j){
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+        return arr;
+    }
+
+
+
+
+   // -----------------------------------    CASE II   ------------------------------------------------------
+    //when number of positive elements and negative elements are unequal
+
+
+    static int [] bruteForce2(int [] arr){                 //SC= O(N)       TimeComplexity=O(2N)
+        ArrayList<Integer> positive= new ArrayList<Integer>();
+        ArrayList<Integer> negative= new ArrayList<Integer>();
+
+        for(int i=0;i<arr.length;i++){                          //o(N)
+            if(arr[i]>0) positive.add(arr[i]);
+            else negative.add(arr[i]);
+        }
+
+        if(positive.size()>negative.size()){
+            int i;
+            for(i=0;i<negative.size();i++){
+                arr[2*i]=positive.get(i);
+                arr[2*i+1]=negative.get(i);
+            }
+            i=2* negative.size();
+            int count= negative.size();
+            while(i<arr.length){
+               arr[i]=positive.get(count++);
+           }
+        }
+        else{
+            int i;
+            for(i=0;i< positive.size();i++){
+                arr[2*i]=positive.get(i);
+                arr[2*i+1]=negative.get(i);
+            }
+            i=2* positive.size();
+            int count= positive.size();
+            while(i<arr.length){
+                arr[i]=negative.get(count++);
+            }
+        }
+        return arr;
+    }
+
+
+    static int[] optimalSolution2(int [] arr){                 //Time-Complexity=O(N)  spaceComplexity=O(1)
+        int posCount=0;
+        int negCount=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>0)posCount++;
+            else negCount++;
+        }
+        int posIndex=0, negIndex=1;
+        if(posCount<negCount){
+            int i=0;
+            while(posIndex<(2*posCount)){
+                if(arr[i]>0){
+                    if(i%2==0){
+                        if(i>=posIndex)   {
+                            posIndex+=2;
+                        }
+                        i++;
+                    }
+                    else {
+                        swap(arr,posIndex,i);
+                        posIndex+=2;
+                    }
+                }
+
+                else{
+                    if(i%2==1){
+                        if(i>=negIndex){
+                            negIndex+=2;
+                        }
+                        i++;
+                    }
+                    else{
+                        swap(arr,negIndex,i);
+                        negIndex+=2;
+                    }
+                }
+            }
+        }
+        else{
+            int i=0;
+            while(negIndex<(2*negCount)){
+                if(arr[i]>0){
+                    if(i%2==0){
+                        if(i>=posIndex)   {
+                            posIndex+=2;
+                        }
+                        i++;
+                    }
+                    else {
+                        swap(arr,posIndex,i);
+                        posIndex+=2;
+                    }
+                }
+
+                else{
+                    if(i%2==1){
+                        if(i>=negIndex){
+                            negIndex+=2;
+                        }
+                        i++;
+                    }
+                    else{
+                        swap(arr,negIndex,i);
+                        negIndex+=2;
+                    }
+                }
+            }
+
+        }
+        return arr;
+    }
+}
+
+
+
