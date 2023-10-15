@@ -1,0 +1,43 @@
+package com.example.dsaMains.arrays;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+
+public class findLeadersInAnArray {
+    public static void main(String[] args){
+        int arr[]={10,22,12,3,0,6};
+        System.out.println(bruteForce(arr));
+        System.out.println(optimalApproach(arr));
+    }
+
+    static ArrayList bruteForce(int []arr){
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            boolean isLeader=true;
+            for(int j=i+1;j<arr.length;j++){
+                if(arr[j]>arr[i]){
+                    isLeader=false;
+                    break;
+                }
+            }
+
+            if(isLeader==true){
+                ans.add(arr[i]);
+            }
+
+        }
+        return ans;
+    }
+
+    static Set optimalApproach(int [] arr){
+        int Leaders=0;
+        HashSet<Integer> ans=new HashSet<Integer>();
+        for(int i=arr.length-1;i>=0;i--){
+            if(arr[i]>Leaders) {
+                Leaders = arr[i];
+                ans.add(arr[i]);
+            }
+        }
+        return ans;
+    }
+}
