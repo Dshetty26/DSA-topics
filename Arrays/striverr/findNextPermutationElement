@@ -1,0 +1,41 @@
+import java.util.Arrays;
+import java.util.Scanner;
+public class findTheNextPermutationArray {
+    public static void main(String[] args){
+           System.out.println("Enter a string:");
+           Scanner sc=new Scanner(System.in);
+           String value=sc.next();
+           System.out.println(Arrays.toString(nextPermutation(value.toCharArray())));
+
+        }
+
+        static char[] nextPermutation(char[] arr){
+        int i=0;
+        for( i=arr.length-1;i>0;i--){
+            if(arr[i]>arr[i-1]){
+                swap(arr,i,i-1);
+                SwapSort(arr,i,arr.length-1);
+                break;
+            }
+        }
+        if(i==0)
+        SwapSort(arr,0,arr.length-1);  
+        return arr;
+        }
+
+        static char[] swap(char[] arr,int i,int j){
+        char temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+        return arr;
+    }
+
+    static char[] SwapSort(char[] arr,int start,int end){
+        while(start<=end){
+            char temp=arr[start];
+            arr[start++]=arr[end];
+            arr[end--]=temp;
+        }
+        return arr;
+    }
+    }
