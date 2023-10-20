@@ -1,0 +1,45 @@
+
+import java.util.Scanner;
+
+public class GCD_HCF {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter first Number:");
+        int n1=sc.nextInt();
+        System.out.println("Enter second Number:");
+        int n2=sc.nextInt();
+        bruteForce(n1,n2);
+        betterApproach(n1,n2);
+        optimalSolution(n1,n2);
+    }
+
+    static void bruteForce(int n1,int n2){
+        int GCD=1;
+        for(int i=Math.min(n1,n2);i>=1;i--){                       //O(min(n1,n2);
+            if(n1%i==0 && n2%i==0){
+            System.out.println("GCD is:"+i);
+
+                break;
+            }
+        }
+    }
+
+    static void betterApproach(int n1,int n2){
+        while(n1>0 && n2>0){                                       //n1=20,n2=1 O(n)
+            if(n1>n2)  n1-=n2;
+            else n2-=n1;
+        }
+        if(n1>0) System.out.println("GCD is:"+n1);
+        else System.out.println("GCD is:"+n2);
+
+    }
+
+    static void optimalSolution(int n1,int n2){                    //log(min(n1,n2))
+        while(n1>0 && n2>0){
+            if(n1>n2) n1%=n2;
+            else n2%=n1;
+        }
+        if(n1>0) System.out.println("GCD is:"+n1);
+        else System.out.println("GCD is:"+n2);
+    }
+}
