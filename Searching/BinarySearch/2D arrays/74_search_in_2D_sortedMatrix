@@ -1,0 +1,50 @@
+// Method 1: time complexity- O(m+n)
+
+class Solution {
+    public boolean searchMatrix(int[][] arr, int target) {
+        int i=0,j=arr[i].length-1;
+        while((i>=0 && i<= arr.length-1) && (j>=0 && j<=arr[i].length-1))       {
+            if(arr[i][j]==target) return true;
+            else if(arr[i][j]>target) j--;
+            else i++;
+        }
+        return false;
+    }
+}
+
+
+
+//Method 2: O(m+n) can be optimized to log(m)+ log(n) i.e. log(m*n)
+
+class Solution {
+    public boolean searchMatrix(int[][] arr, int target) {
+     return bsFindRow(arr,target);
+    }
+
+    boolean bsFindRow(int [][] arr,int target){
+        int rowIndex=-1;int col=arr[0].length-1;
+        int start=0,end=arr.length-1;
+        while(start<=end){
+            int mid=start+(end-start)/2;
+            if(arr[mid][col]==target)return true;
+            else if(arr[mid][col]>target){
+                rowIndex=mid;
+                end=mid-1;
+            }
+            else start=mid+1;
+        }
+        if(rowIndex!=-1) return bs(arr[rowIndex],target);
+        return false;
+    }
+
+    boolean bs(int []arr,int target){
+        int start=0,end=arr.length-2;
+        while(start<=end){
+            int mid=start+(end-start)/2;
+            if(arr[mid]==target)return true;
+            else if(arr[mid]>target) end=mid-1;
+            else start=mid+1;
+        }
+        return false;
+    }
+}

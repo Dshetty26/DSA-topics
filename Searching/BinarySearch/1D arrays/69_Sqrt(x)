@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+class Solution {
+    public int mySqrt(int x) {
+      int start=0,end=x;
+      int ans=-1;
+      while(start<=end){
+          int mid=start+(end-start)/2;
+          if(findSquare(mid,x,2)==1) return mid;
+          else if(findSquare(mid,x,2)==0){
+              ans=mid;
+              start=mid+1;
+          }
+          else end=mid-1;
+      }
+      return ans;
+    }
+    
+    //there might be that x value will be very very big and we cannot store its square in int 
+    //so we are using find a function which returns 1 if equal
+    //returns 0 if less than target 
+    //returns 2 if greater than target
+    static int findSquare(int mid,int target,int root){
+        long Mul=1;
+        for(int i=1;i<=root;i++){
+            Mul=Mul*mid;
+            if(Mul>target) return 2;
+        }
+      if(Mul==target) return 1;
+      return 0;
+    }
+}

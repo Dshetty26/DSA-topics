@@ -1,0 +1,82 @@
+//method 1
+
+class Solution {
+  public static int search(int[] arr, int target) {
+     int start=0,end=arr.length-1;
+     if(end==0){                           //if array of size 1
+         if(arr[0]==target) return 0;
+     }
+     else{                                 
+         while(start<=end){
+             int mid=start+(end-start)/2;
+             if(arr[mid]==target)return mid;                            // if target is at mid--> return mid;
+             else if(arr[mid]<arr[end]){                                // if right side is sorted
+                 if(target>=arr[mid] && target<=arr[end]) start=mid+1;  // check whether element lies in right half
+                 else end=mid-1;                                        // if not decement end=mid-1 i.e. left half
+             } 
+             else{                                                      // this means left half is sorted
+                 if(arr[start]<=target && arr[mid]>=target)end=mid-1;   // check whether element lies in left sorted part
+                 else start=mid+1;                                      // if not increment start=mid+1 i.e. right half
+             }
+         }
+         
+     }
+
+     return -1;
+    }  
+}
+
+//Method 2 
+//step 1= find peak element
+// step 2= binarySearch(start,peak) , binarySearch(peak+1,end);
+
+class Solution {
+  public static int search(int[] nums, int target) {
+      if(nums.length==1){
+          if(nums[0]==target){
+              return 0;
+          }
+          else return -1;
+      }
+        int peak=findPeak(nums);
+        if(target>=nums[0]){
+            return searchTarget(nums,target,0,peak);
+        }
+        else return searchTarget(nums,target,peak+1,nums.length-1);
+    }
+
+    static int findPeak(int[] nums){
+        int N=nums.length;
+        int start=0,end=N-1;
+        while(start<=end){
+               int mid=start+(end-start)/2;
+            if(nums[mid]<nums[(mid-1+N)%N]){
+                return (mid-1+N)%N;
+            }
+            else if(nums[mid]>nums[(mid+1)%N]){
+                return (mid);
+            }
+            else if(nums[mid]>nums[end]){
+                start=mid+1;
+            }
+            else end=mid-1;
+        }
+        return -1;
+    }
+
+    static int searchTarget(int [] arr,int target,int start,int end){
+        int ans=-1;
+        while(start<=end){
+            int mid=start+(end-start)/2;
+            if(arr[mid]==target){
+                ans=mid;
+                break;
+            }
+            else if(arr[mid]>target){
+                end=mid-1;
+            }
+            else start=mid+1;
+        }
+        return ans;
+    }
+}
