@@ -1,0 +1,23 @@
+package com.example.dsaMains.BasicMaths;
+
+import java.util.Scanner;
+
+public class CheckArmStrong {
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        isArmstrong(n);
+    }
+    static void isArmstrong(int n) {
+        int og = n;
+        int sum = 0;
+        while (n > 0) {
+            int ld = n % 10;
+            sum += (ld * ld * ld);
+            n /= 10;
+        }
+        if (sum == og) {
+            System.out.println(og + " is an Armstrong Number!");
+        } else System.out.println(og + " is not an Armstrong Number!");
+    }
+}

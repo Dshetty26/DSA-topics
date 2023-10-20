@@ -1,0 +1,25 @@
+package com.example.dsaMains.BasicMaths;
+
+import java.util.Scanner;
+
+public class checkPalindrome {
+    public static void main(String[] args){
+        System.out.println("Enter a number:");
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        isPalindrome(n);
+    }
+    static void isPalindrome(int n) {
+        int og = n;
+        int sum = 0;
+        while (n > 0) {
+            int ld = n % 10;
+            sum = (sum*10)+ld;
+            n /= 10;
+        }
+        if (sum == og) {
+            System.out.println(og + "is a Palindrome!");
+        } else System.out.println(og + "is not a Palindrome!");
+    }
+}
+

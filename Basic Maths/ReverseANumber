@@ -1,0 +1,12 @@
+import java.util.Scanner;
+public class ReverseANumber(int num){
+public static void main(String[] args){
+    int revNum=0;
+    while(num>0){
+        int ld=num%10;
+        revNum=revNum*10+ld;         //This formula will deal with Trailing zeroe's as well
+        num/=10;
+    }
+    System.out.println(revNum);
+}
+}
