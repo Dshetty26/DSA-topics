@@ -1,0 +1,23 @@
+package com.example.dsaMains.Reccursion;
+import java.util.Scanner;
+public class SumOfFirstNnums {
+    public static void main(String[] args) {
+        System.out.println("Enter N:");
+        Scanner sc=new Scanner(System.in);
+        int N=sc.nextInt();
+        findSum(N,0);
+       System.out.println("The Sum is:"+findSum(N) );
+    }
+    static void findSum(int i,int sum){                                  //method 1: using Parameter
+        if(i==0){
+            System.out.println("Sum is:"+sum);                           //Time-Complexity=O(N)
+            return ;                                                     // Space-Complexity=O(1)
+        }
+        sum+=i;
+        findSum(i-1,sum);
+    }
+    static int findSum(int N){                                            //Using backTracking
+        if(N==0) return 0;                                                //Time-Complexity=O(N)
+        return N+findSum(N-1);                                         // Space-Complexity=O(1)
+    }
+}
