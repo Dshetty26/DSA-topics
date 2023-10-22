@@ -1,0 +1,22 @@
+package com.example.dsaMains.Reccursion;
+import java.util.Scanner;
+public class PrintNameNTimes {
+    public static void main(String[] args){
+        System.out.println("Enter the number of Times Name is to be printed:");
+        Scanner sc=new Scanner(System.in);
+        int N=sc.nextInt();
+    }
+
+
+    static void bruteForce(int N){                                 //TC=O(N)   SC=O(1)
+        for(int i=0;i<N;i++){
+            System.out.println("Deshik");
+        }
+    }
+
+    static void PrintNameReccur(int N){                           //TC=O(N)   SC=O(1)
+        if(N<1) return;
+        System.out.println("Deshik");
+        PrintNameReccur(N-1);
+    }
+}
