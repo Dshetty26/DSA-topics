@@ -1,0 +1,21 @@
+package com.example.dsaMains.Reccursion;
+import java.util.Scanner;
+public class FactorialOfNNumbers {
+    public static void main(String[] args){
+        System.out.println("Enter the N:");
+        Scanner sc=new Scanner(System.in);
+        int N=sc.nextInt();
+        System.out.println("The Factorial of "+N+" is :"+DisplayFactorial(N,1));
+        System.out.println("The Factorial of "+N+" is :"+factorial(N));
+    }
+    static int DisplayFactorial(int N,int factorial) {                //using parameteric function
+       if(N==0) return 1*factorial;
+       factorial*=N;
+       return DisplayFactorial(N-1, factorial);
+    }
+
+    static int factorial(int N) {                                      //using backTracking Method
+        if(N==0) return 1;
+        return N*factorial(N-1);
+    }
+}
